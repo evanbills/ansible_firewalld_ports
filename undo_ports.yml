@@ -1,14 +1,16 @@
 ---
 - name:  Programmatically set firewall ports based on host instance number. 
   hosts: localhost 
+  vars:
+    instance_number: 99 
   become:  true
   
   tasks:
     - name: Set port 1128 manually 
       firewalld:
-        port: 1128/tcp
+        port: "{{ instance_number }}28/tcp"
         permanent: true
-        state: disabled 
+        state: disabled
       notify:
         - restart firewalld
 
