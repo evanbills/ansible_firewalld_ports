@@ -1,0 +1,20 @@
+---
+- name:  Programmatically set firewall ports based on host instance number. 
+  hosts: localhost 
+  become:  true
+  
+  tasks:
+    - name: Set port 1128 manually 
+      firewalld:
+        port: 1128/tcp
+        permanent: true
+        state: enabled
+      notify:
+        - restart firewalld
+
+  handlers:
+    - name: restart firewalld 
+      systemd: 
+        name: firewalld 
+        state: restarted
+
